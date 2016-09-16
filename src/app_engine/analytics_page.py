@@ -84,6 +84,8 @@ class AnalyticsPage(webapp2.RequestHandler):
     return
 
   def _handle_event(self, msg):
+    return constants.RESPONSE_SUCCESS
+
     request_time_ms = msg.get(RequestField.REQUEST_TIME_MS)
     client_type = msg.get(RequestField.CLIENT_TYPE)
 
@@ -127,5 +129,3 @@ class AnalyticsPage(webapp2.RequestHandler):
                            client_time_ms=client_event_time_ms,
                            host=self.request.host,
                            flow_id=flow_id, client_type=client_type)
-
-    return constants.RESPONSE_SUCCESS

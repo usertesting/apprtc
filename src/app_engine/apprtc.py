@@ -401,10 +401,6 @@ def add_client_to_room(request, room_id, client_id, is_loopback):
       logging.info('Added client %s in room %s, retries = %d' \
           %(client_id, room_id, retries))
 
-      if room.get_occupancy() == 2:
-        analytics.report_event(analytics.EventType.ROOM_SIZE_2,
-                               room_id,
-                               host=request.host)
       success = True
       break
     else:
