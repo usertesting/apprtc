@@ -8,7 +8,10 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // make node configurations available
     pkg: grunt.file.readJSON('package.json'),
-
+    watch: {
+      files: ['src/**/*'],
+      tasks: ['build'],
+    },
     csslint: {
       options: {
         csslintrc: 'build/.csslintrc'
@@ -182,6 +185,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-jstestdriver-phantomjs');
   grunt.loadNpmTasks('grunt-closurecompiler');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadTasks('build/grunt-chrome-build');
 
   // Set default tasks to run when grunt is called without parameters.
@@ -196,5 +200,5 @@ module.exports = function(grunt) {
                                         'shell:removePythonTestsFromOutAppEngineDir']);
   grunt.registerTask('jstests', ['shell:genJsEnums', 'closurecompiler:debug', 'grunt-chrome-build', 'jstdPhantom']);
   // buildAppEnginePackage must be done before closurecompiler since buildAppEnginePackage resets out/app_engine.
-  grunt.registerTask('build', ['shell:buildAppEnginePackage', 'shell:genJsEnums', 'closurecompiler:debug', 'grunt-chrome-build']);
+  grunt.registerTask('build', ['shell:buildAppEnginePackage', 'shell:genJsEnums', 'closurecompiler:debug', 'grunt-chrome-build', 'watch']);
 };
