@@ -32,6 +32,7 @@ body {
   padding: 0;
   width: 100%;
   color: #666;
+  box-sizing: border-box;
 }
 
 #remote-canvas {
@@ -69,9 +70,10 @@ div.warning {
   font-size: 0; /* to fix whitespace/scrollbars problem */
   height: 100%;
   pointer-events: none;
-  position: absolute;
   transition: all 1s;
-  width: 100%;
+  width: 70%;
+  float: right;
+  background-color: pink;
 }
 
 #videos.active {
@@ -81,6 +83,15 @@ div.warning {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
 }
+
+#notes{
+  width: 30%;
+  background: white;
+  float: left;
+  padding: 2em;
+  box-sizing: border-box;
+}
+
 
 footer > div {
   background-color: black;
@@ -130,7 +141,6 @@ label {
   height: 100%;
   max-height: 100%;
   max-width: 100%;
-  object-fit: cover;  /* no letterboxing */
   transition: opacity 1s;
   -moz-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
@@ -162,7 +172,6 @@ label {
   height: 100%;
   max-height: 100%;
   max-width: 100%;
-  object-fit: cover;  /* no letterboxing */
   opacity: 0;
   position: absolute;
   -moz-transform: rotateY(180deg);

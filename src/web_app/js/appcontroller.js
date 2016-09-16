@@ -48,6 +48,7 @@ var UI_CONSTANTS = {
   sharingDiv: '#sharing-div',
   statusDiv: '#status-div',
   videosDiv: '#videos',
+  notesDiv: '#notes',
 };
 
 // The controller that connects the Call with the UI.
@@ -63,6 +64,7 @@ var AppController = function(loadingParams) {
   this.statusDiv_ = $(UI_CONSTANTS.statusDiv);
   this.remoteVideo_ = $(UI_CONSTANTS.remoteVideo);
   this.videosDiv_ = $(UI_CONSTANTS.videosDiv);
+  this.notesDiv_ = $(UI_CONSTANTS.notesDiv);
   this.roomLinkHref_ = $(UI_CONSTANTS.roomLinkHref);
   this.rejoinDiv_ = $(UI_CONSTANTS.rejoinDiv);
   this.rejoinLink_ = $(UI_CONSTANTS.rejoinLink);
@@ -244,6 +246,7 @@ AppController.prototype.finishCallSetup_ = function(roomId) {
 AppController.prototype.hangup_ = function() {
   trace('Hanging up.');
   this.hide_(this.icons_);
+  this.hide_(this.notesDiv_);
   this.displayStatus_('Hanging up');
   this.transitionToDone_();
 
@@ -310,6 +313,7 @@ AppController.prototype.attachLocalStream_ = function() {
 
   this.displayStatus_('');
   this.activate_(this.localVideo_);
+  this.show_(this.notesDiv_);
   this.show_(this.icons_);
   if (this.localStream_.getVideoTracks().length === 0) {
     this.hide_($(UI_CONSTANTS.muteVideoSvg));
