@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     watch: {
       files: ['src/**/*'],
-      tasks: ['build'],
+      tasks: ['build_app'],
     },
     csslint: {
       options: {
@@ -200,5 +200,7 @@ module.exports = function(grunt) {
                                         'shell:removePythonTestsFromOutAppEngineDir']);
   grunt.registerTask('jstests', ['shell:genJsEnums', 'closurecompiler:debug', 'grunt-chrome-build', 'jstdPhantom']);
   // buildAppEnginePackage must be done before closurecompiler since buildAppEnginePackage resets out/app_engine.
-  grunt.registerTask('build', ['shell:buildAppEnginePackage', 'shell:genJsEnums', 'closurecompiler:debug', 'grunt-chrome-build', 'watch']);
+  grunt.registerTask('build', ['build_app', 'watch']);
+  grunt.registerTask('build_app', ['shell:buildAppEnginePackage', 'shell:genJsEnums', 'closurecompiler:debug', 'grunt-chrome-build']);
+
 };
