@@ -26,7 +26,7 @@ CALLSTATS_PARAMS = {
 }
 
 # Dictionary keys in the collider instance info constant.
-WSS_INSTANCE_HOST_KEY = 'host_port_pair'
+WSS_INSTANCE_HOST_KEY = 'http://ec2-52-24-20-59.us-west-2.compute.amazonaws.com:8089'
 WSS_INSTANCE_NAME_KEY = 'vm_name'
 WSS_INSTANCE_ZONE_KEY = 'zone'
 WSS_INSTANCES = [{

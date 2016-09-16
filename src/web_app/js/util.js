@@ -93,21 +93,15 @@ function sendUrlRequest(method, url, async, body) {
 // }
 function requestIceServers(iceServerRequestUrl, iceTransports) {
   return new Promise(function(resolve, reject) {
-    sendAsyncUrlRequest('POST', iceServerRequestUrl).then(function(response) {
-      var iceServerRequestResponse = parseJSON(response);
-      if (!iceServerRequestResponse) {
-        reject(Error('Error parsing response JSON: ' + response));
-        return;
-      }
-      if (iceTransports !== '') {
-        filterIceServersUrls(iceServerRequestResponse, iceTransports);
-      }
-      trace('Retrieved ICE server information.');
-      resolve(iceServerRequestResponse.iceServers);
-    }).catch(function(error) {
-      reject(Error('ICE server request error: ' + error.message));
-      return;
-    });
+    var servers = [{
+        credential: "turnPassword",
+        username: "turnUser",
+        urls: [
+          "turn:ec2-52-24-20-59.us-west-2.compute.amazonaws.com:3478?transport=udp",
+          "turn:ec2-52-24-20-59.us-west-2.compute.amazonaws.com:3478?transport=tcp"
+        ]
+    }];
+    resolve(servers);
   });
 }
 
