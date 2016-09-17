@@ -199,13 +199,18 @@ AppController.prototype.createCall_ = function() {
 
 AppController.prototype.showRoomSelection_ = function() {
   var roomSelectionDiv = $(UI_CONSTANTS.roomSelectionDiv);
+  var confirmJoinDiv = $(UI_CONSTANTS.confirmJoinDiv);
   this.roomSelection_ = new RoomSelection(roomSelectionDiv, UI_CONSTANTS);
 
   this.show_(roomSelectionDiv);
   this.roomSelection_.onRoomSelected = function(roomName) {
     this.hide_(roomSelectionDiv);
+    this.show_(confirmJoinDiv);
     this.createCall_();
-    this.finishCallSetup_(roomName);
+    $(UI_CONSTANTS.confirmJoinButton).onclick = function() {
+      this.hide_(confirmJoinDiv);
+      this.finishCallSetup_(roomName);
+    }.bind(this);
 
     this.roomSelection_.removeEventListeners();
     this.roomSelection_ = null;
