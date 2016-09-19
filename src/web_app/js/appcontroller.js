@@ -49,6 +49,10 @@ var UI_CONSTANTS = {
   statusDiv: '#status-div',
   videosDiv: '#videos',
   notesDiv: '#notes',
+  noteForm: '#note_creation',
+  noteList: '#note_list',
+  noteInput: '#note',
+  headerDiv: '#header',
 };
 
 // The controller that connects the Call with the UI.
@@ -56,26 +60,35 @@ var AppController = function(loadingParams) {
   trace('Initializing; server= ' + loadingParams.roomServer + '.');
   trace('Initializing; room=' + loadingParams.roomId + '.');
 
-  this.hangupSvg_ = $(UI_CONSTANTS.hangupSvg);
-  this.icons_ = $(UI_CONSTANTS.icons);
-  this.localVideo_ = $(UI_CONSTANTS.localVideo);
-  this.miniVideo_ = $(UI_CONSTANTS.miniVideo);
-  this.sharingDiv_ = $(UI_CONSTANTS.sharingDiv);
-  this.statusDiv_ = $(UI_CONSTANTS.statusDiv);
-  this.remoteVideo_ = $(UI_CONSTANTS.remoteVideo);
-  this.videosDiv_ = $(UI_CONSTANTS.videosDiv);
-  this.notesDiv_ = $(UI_CONSTANTS.notesDiv);
-  this.roomLinkHref_ = $(UI_CONSTANTS.roomLinkHref);
-  this.rejoinDiv_ = $(UI_CONSTANTS.rejoinDiv);
-  this.rejoinLink_ = $(UI_CONSTANTS.rejoinLink);
-  this.newRoomLink_ = $(UI_CONSTANTS.newRoomLink);
-  this.rejoinButton_ = $(UI_CONSTANTS.rejoinButton);
+  var _that = this;
+
+  this.hangupSvg_     = $(UI_CONSTANTS.hangupSvg);
+  this.icons_         = $(UI_CONSTANTS.icons);
+  this.localVideo_    = $(UI_CONSTANTS.localVideo);
+  this.miniVideo_     = $(UI_CONSTANTS.miniVideo);
+  this.sharingDiv_    = $(UI_CONSTANTS.sharingDiv);
+  this.statusDiv_     = $(UI_CONSTANTS.statusDiv);
+  this.remoteVideo_   = $(UI_CONSTANTS.remoteVideo);
+  this.videosDiv_     = $(UI_CONSTANTS.videosDiv);
+  this.notesDiv_      = $(UI_CONSTANTS.notesDiv);
+  this.roomLinkHref_  = $(UI_CONSTANTS.roomLinkHref);
+  this.rejoinDiv_     = $(UI_CONSTANTS.rejoinDiv);
+  this.rejoinLink_    = $(UI_CONSTANTS.rejoinLink);
+  this.newRoomLink_   = $(UI_CONSTANTS.newRoomLink);
+  this.rejoinButton_  = $(UI_CONSTANTS.rejoinButton);
   this.newRoomButton_ = $(UI_CONSTANTS.newRoomButton);
+  this.noteForm_      = $(UI_CONSTANTS.noteForm);
+  this.noteList_      = $(UI_CONSTANTS.noteList);
+  this.noteInput_     = $(UI_CONSTANTS.noteInput);
+  this.headerDiv_     = $(UI_CONSTANTS.headerDiv);
 
   this.newRoomButton_.addEventListener('click',
       this.onNewRoomClick_.bind(this), false);
   this.rejoinButton_.addEventListener('click',
       this.onRejoinClick_.bind(this), false);
+
+  this.noteForm_.addEventListener('submit',
+      this.onSubmitNote_.bind(this), false);
 
   this.muteAudioIconSet_ =
       new AppController.IconSet_(UI_CONSTANTS.muteAudioSvg);
@@ -247,6 +260,8 @@ AppController.prototype.hangup_ = function() {
   trace('Hanging up.');
   this.hide_(this.icons_);
   this.hide_(this.notesDiv_);
+  this.hide_(this.videosDiv_);
+  this.hide_(this.headerDiv_);
   this.displayStatus_('Hanging up');
   this.transitionToDone_();
 
@@ -313,7 +328,8 @@ AppController.prototype.attachLocalStream_ = function() {
 
   this.displayStatus_('');
   this.activate_(this.localVideo_);
-  this.show_(this.notesDiv_);
+  this.show_(this.videosDiv_);
+  this.show_(this.headerDiv_);
   this.show_(this.icons_);
   if (this.localStream_.getVideoTracks().length === 0) {
     this.hide_($(UI_CONSTANTS.muteVideoSvg));
@@ -346,6 +362,8 @@ AppController.prototype.transitionToActive_ = function() {
   this.activate_(this.videosDiv_);
   this.show_(this.hangupSvg_);
   this.displayStatus_('');
+  this.show_(this.notesDiv_);
+  this.startTime = new Date();
 };
 
 AppController.prototype.transitionToWaiting_ = function() {
@@ -400,43 +418,79 @@ AppController.prototype.onNewRoomClick_ = function() {
   this.showRoomSelection_();
 };
 
+AppController.prototype.onSubmitNote_ = function(e) {
+  e.preventDefault();
+
+  var note_text       = document.createElement("P")
+  note_text.innerHTML = this.noteInput_.value;
+
+  var time       = document.createElement("TIME");
+  time.innerHTML = this.calculateTimeStamp();
+
+  var list_item = document.createElement("LI");
+
+  list_item.appendChild(time);
+  list_item.appendChild(note_text);
+
+  this.noteList_.appendChild(list_item);
+  this.noteInput_.value = "";
+}
+
+AppController.prototype.calculateTimeStamp = function() {
+  var currentTime = new Date()
+  var timeDiff = currentTime - this.startTime;
+
+  var msec = currentTime - this.startTime;
+  var hh = Math.floor(msec / 1000 / 60 / 60);
+  msec -= hh * 1000 * 60 * 60;
+  var mm = Math.floor(msec / 1000 / 60);
+  msec -= mm * 1000 * 60;
+  var ss = Math.floor(msec / 1000);
+  msec -= ss * 1000;
+  if (ss < 10){
+    ss = "0" + ss;
+  }
+
+  return mm + ":" + ss;
+}
+
 // Spacebar, or m: toggle audio mute.
 // c: toggle camera(video) mute.
 // f: toggle fullscreen.
 // i: toggle info panel.
 // q: quit (hangup)
 // Return false to screen out original Chrome shortcuts.
-AppController.prototype.onKeyPress_ = function(event) {
-  switch (String.fromCharCode(event.charCode)) {
-    case ' ':
-    case 'm':
-      if (this.call_) {
-        this.call_.toggleAudioMute();
-        this.muteAudioIconSet_.toggle();
-      }
-      return false;
-    case 'c':
-      if (this.call_) {
-        this.call_.toggleVideoMute();
-        this.muteVideoIconSet_.toggle();
-      }
-      return false;
-    case 'f':
-      this.toggleFullScreen_();
-      return false;
-    case 'i':
-      this.infoBox_.toggleInfoDiv();
-      return false;
-    case 'q':
-      this.hangup_();
-      return false;
-    case 'l':
-      this.toggleMiniVideo_();
-      return false;
-    default:
-      return;
-  }
-};
+// AppController.prototype.onKeyPress_ = function(event) {
+//   switch (String.fromCharCode(event.charCode)) {
+//     case ' ':
+//     case 'm':
+//       if (this.call_) {
+//         this.call_.toggleAudioMute();
+//         this.muteAudioIconSet_.toggle();
+//       }
+//       return false;
+//     case 'c':
+//       if (this.call_) {
+//         this.call_.toggleVideoMute();
+//         this.muteVideoIconSet_.toggle();
+//       }
+//       return false;
+//     case 'f':
+//       this.toggleFullScreen_();
+//       return false;
+//     case 'i':
+//       this.infoBox_.toggleInfoDiv();
+//       return false;
+//     case 'q':
+//       this.hangup_();
+//       return false;
+//     case 'l':
+//       this.toggleMiniVideo_();
+//       return false;
+//     default:
+//       return;
+//   }
+// };
 
 AppController.prototype.pushCallNavigation_ = function(roomId, roomLink) {
   if (!isChromeApp()) {
