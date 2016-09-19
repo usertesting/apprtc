@@ -94,12 +94,9 @@ function sendUrlRequest(method, url, async, body) {
 function requestIceServers(iceServerRequestUrl, iceTransports) {
   return new Promise(function(resolve, reject) {
     var servers = [{
-        credential: "turnPassword",
-        username: "turnUser",
-        urls: [
-          "turn:ec2-52-24-20-59.us-west-2.compute.amazonaws.com:3478?transport=udp",
-          "turn:ec2-52-24-20-59.us-west-2.compute.amazonaws.com:3478?transport=tcp"
-        ]
+        credential: "youhavetoberealistic",
+        username: "ninefingers",
+        urls: ['turn:54.70.131.20:3478?transport=tcp']
     }];
     resolve(servers);
   });
