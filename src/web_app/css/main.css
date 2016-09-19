@@ -209,7 +209,7 @@ label {
 }
 
 button {
-  background-color: #4285F4;
+  background-color: #1984bc;
   border: none;
   border-radius: 2px;
   color: white;
@@ -233,9 +233,6 @@ button:hover {
 
 button:focus {
   outline: none;
-  -webkit-box-shadow: 0 10px 15px 0 rgba(0,0,0,.5);
-  -moz-box-shadow: 0 10px 15px 0 rgba(0,0,0,.5);
-  box-shadow: 0 10px 15px 0 rgba(0,0,0,.5);
 }
 
 button[disabled] {
@@ -430,6 +427,44 @@ svg {
   background: #bfbfbf;
 }
 
+#send_url {
+  font-size: 12px;
+}
+
+#send_url_form {
+  background: white;
+  box-shadow: 0 10px 15px 0 rgba(0,0,0,.5);
+  box-sizing: border-box;
+  border-top: 3px solid #1984BC;
+  padding: 1em;
+  position: absolute;
+  z-index: 10;
+  width: 25%;
+  left: 11%;
+  transition: all 1s;
+  opacity: 0;
+}
+
+#send_url_form.active {
+  opacity: 1;
+}
+
+#send_url_form input{
+  margin-bottom: 1em;
+}
+
+#send_url_form:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 7.5px 8px 7.5px;
+  border-color: transparent transparent #1984bc transparent;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+}
+
 #notes{
   width: 30%;
   border-top: 5px solid #1984BC;
@@ -437,6 +472,11 @@ svg {
   float: left;
   padding: 2em;
   box-sizing: border-box;
+}
+
+#notes header {
+  display: flex;
+  justify-content: space-between;
 }
 
 #notes h3 {

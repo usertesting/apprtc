@@ -17,10 +17,11 @@
   <meta itemprop="name" content="AppRTC">
   <meta name="mobile-web-app-capable" content="yes">
   <meta id="theme-color" name="theme-color" content="#1e1e1e">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
   <base target="_blank">
 
-  <title>AppRTC</title>
+  <title>UserTesting - Moderated Testing</title>
 
   <link rel="manifest" href="/manifest.json">
   <link rel="icon" sizes="192x192" href="/images/webrtc-icon-192x192.png">
@@ -44,7 +45,17 @@
     <img src="https://assets.usertesting.com/assets/elements/logos/usertesting-refresh15-01c59d64ed11e2ea7f2b257cda72cb85b5bd9dfba6a98a1c214394a65b430d76.svg" height="48"/>
   </header>
   <div id="notes" class="hidden">
-    <h3>Notes</h3>
+    <header>
+      <h3>Notes</h3>
+      <button id="send_url" type='button'>
+        <i class="fa fa-link" aria-hidden="true"></i>
+        Send Link
+      </button>
+    </header>
+    <form id="send_url_form">
+      <input id="url" name="url" type="text" placeholder="Link to send..." />
+      <button type="submit">Send</button>
+    </form>
     <ul id="note_list"></ul>
     <form id="note_creation">
       <input id="note" name="note" type="text" placeholder="New note..." />

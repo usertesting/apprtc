@@ -53,6 +53,9 @@ var UI_CONSTANTS = {
   noteList: '#note_list',
   noteInput: '#note',
   headerDiv: '#header',
+  urlButton: '#send_url',
+  sendUrlForm: '#send_url_form',
+  urlInput: '#url',
 };
 
 // The controller that connects the Call with the UI.
@@ -81,6 +84,9 @@ var AppController = function(loadingParams) {
   this.noteList_      = $(UI_CONSTANTS.noteList);
   this.noteInput_     = $(UI_CONSTANTS.noteInput);
   this.headerDiv_     = $(UI_CONSTANTS.headerDiv);
+  this.urlButton_     = $(UI_CONSTANTS.urlButton);
+  this.urlInput_      = $(UI_CONSTANTS.urlInput);
+  this.sendUrlForm_   = $(UI_CONSTANTS.sendUrlForm);
 
   this.newRoomButton_.addEventListener('click',
       this.onNewRoomClick_.bind(this), false);
@@ -89,6 +95,12 @@ var AppController = function(loadingParams) {
 
   this.noteForm_.addEventListener('submit',
       this.onSubmitNote_.bind(this), false);
+
+  this.sendUrlForm_.addEventListener('submit',
+      this.onSubmitUrl_.bind(this), false);
+
+  this.urlButton_.addEventListener('click',
+      this.onSendUrlClick_.bind(this), false);
 
   this.muteAudioIconSet_ =
       new AppController.IconSet_(UI_CONSTANTS.muteAudioSvg);
@@ -439,6 +451,32 @@ AppController.prototype.onSubmitNote_ = function(e) {
 
   this.noteList_.appendChild(list_item);
   this.noteInput_.value = "";
+}
+
+AppController.prototype.onSendUrlClick_ = function() {
+  if(this.sendUrlForm_.classList.contains('active')){
+    this.deactivate_(this.sendUrlForm_);
+  }else{
+    this.activate_(this.sendUrlForm_);
+  }
+}
+
+AppController.prototype.onSubmitUrl_ = function(e) {
+  e.preventDefault();
+
+  var link       = document.createElement("P")
+  link.innerHTML = "<i class='fa fa-link'></i> <a href='" + this.urlInput_.value + "'>" + this.urlInput_.value + "</a>";
+
+  var time       = document.createElement("TIME");
+  time.innerHTML = this.calculateTimeStamp();
+
+  var list_item = document.createElement("LI");
+  list_item.appendChild(time);
+  list_item.appendChild(link);
+
+  this.noteList_.appendChild(list_item);
+  this.urlInput_.value = "";
+  this.deactivate_(this.sendUrlForm_);
 }
 
 AppController.prototype.calculateTimeStamp = function() {
