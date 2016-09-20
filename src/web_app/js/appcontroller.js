@@ -23,6 +23,8 @@ var UI_CONSTANTS = {
   confirmJoinButton: '#confirm-join-button',
   confirmJoinDiv: '#confirm-join-div',
   confirmJoinRoomSpan: '#confirm-join-room-span',
+  endShareButton: '#end-share-button',
+  endShareDiv: '#end-share-div',
   fullscreenSvg: '#fullscreen',
   hangupSvg: '#hangup',
   icons: '#icons',
@@ -65,6 +67,8 @@ var AppController = function(loadingParams) {
 
   var _that = this;
 
+  this.endShareButton_ = $(UI_CONSTANTS.endShareButton);
+  this.endShareDiv_   = $(UI_CONSTANTS.endShareDiv);
   this.hangupSvg_     = $(UI_CONSTANTS.hangupSvg);
   this.icons_         = $(UI_CONSTANTS.icons);
   this.localVideo_    = $(UI_CONSTANTS.localVideo);
@@ -101,6 +105,9 @@ var AppController = function(loadingParams) {
 
   this.urlButton_.addEventListener('click',
       this.onSendUrlClick_.bind(this), false);
+
+  this.endShareButton_.addEventListener('click',
+      this.onEndShareClick_.bind(this), false);
 
   this.muteAudioIconSet_ =
       new AppController.IconSet_(UI_CONSTANTS.muteAudioSvg);
@@ -478,7 +485,13 @@ AppController.prototype.onSubmitUrl_ = function(e) {
 
   if (!this.screenVideo_.classList.contains('active')) {
     this.activate_(this.screenVideo_);
+    this.show_(this.endShareDiv_);
   }
+}
+
+AppController.prototype.onEndShareClick_ = function(e) {
+  this.deactivate_(this.screenVideo_);
+  this.hide_(this.endShareDiv_);
 }
 
 AppController.prototype.calculateTimeStamp = function() {

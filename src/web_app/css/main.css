@@ -220,6 +220,25 @@ label {
   box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.75);
 }
 
+#end-share-div {
+  z-index: 5;
+  position: absolute;
+  top: 80%;
+  left: 30%;
+  width: 70%;
+  text-align: center;
+}
+
+button#end-share-button {
+  background-color: red;
+}
+button#end-share-button:active {
+  background-color: darkred;
+}
+button#end-share-button:hover {
+  background-color: darkred;
+}
+
 /*////// room selection start ///////////////////*/
 #recent-rooms-list {
   list-style-type: none;
