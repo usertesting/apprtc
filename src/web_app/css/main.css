@@ -324,6 +324,7 @@ p {
 #icons {
   top: 1em;
   left: 30%;
+  padding-left: 1em;
   position: absolute;
 }
 

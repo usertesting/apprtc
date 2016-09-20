@@ -52,7 +52,6 @@ var UI_CONSTANTS = {
   noteForm: '#note_creation',
   noteList: '#note_list',
   noteInput: '#note',
-  headerDiv: '#header',
   urlButton: '#send_url',
   sendUrlForm: '#send_url_form',
   screenVideo: '#screen-video',
@@ -84,7 +83,6 @@ var AppController = function(loadingParams) {
   this.noteForm_      = $(UI_CONSTANTS.noteForm);
   this.noteList_      = $(UI_CONSTANTS.noteList);
   this.noteInput_     = $(UI_CONSTANTS.noteInput);
-  this.headerDiv_     = $(UI_CONSTANTS.headerDiv);
   this.urlButton_     = $(UI_CONSTANTS.urlButton);
   this.urlInput_      = $(UI_CONSTANTS.urlInput);
   this.sendUrlForm_   = $(UI_CONSTANTS.sendUrlForm);
@@ -280,7 +278,6 @@ AppController.prototype.hangup_ = function() {
   this.hide_(this.icons_);
   this.hide_(this.notesDiv_);
   this.hide_(this.videosDiv_);
-  this.hide_(this.headerDiv_);
   this.displayStatus_('Hanging up');
   this.transitionToDone_();
 
@@ -348,7 +345,6 @@ AppController.prototype.attachLocalStream_ = function() {
   this.displayStatus_('');
   this.activate_(this.localVideo_);
   this.show_(this.videosDiv_);
-  this.show_(this.headerDiv_);
   this.show_(this.icons_);
   if (this.localStream_.getVideoTracks().length === 0) {
     this.hide_($(UI_CONSTANTS.muteVideoSvg));
