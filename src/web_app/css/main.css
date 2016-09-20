@@ -182,6 +182,25 @@ label {
   z-index: 1;
 }
 
+#screen-video {
+  right: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+  transition: opacity 1s;
+}
+
+#screen-video.active {
+  opacity: 1;
+  z-index: 1;
+}
+
 #confirm-join-div {
   z-index: 5;
   position: absolute;

@@ -55,6 +55,7 @@ var UI_CONSTANTS = {
   headerDiv: '#header',
   urlButton: '#send_url',
   sendUrlForm: '#send_url_form',
+  screenVideo: '#screen-video',
   urlInput: '#url',
 };
 
@@ -87,6 +88,7 @@ var AppController = function(loadingParams) {
   this.urlButton_     = $(UI_CONSTANTS.urlButton);
   this.urlInput_      = $(UI_CONSTANTS.urlInput);
   this.sendUrlForm_   = $(UI_CONSTANTS.sendUrlForm);
+  this.screenVideo_   = $(UI_CONSTANTS.screenVideo);
 
   this.newRoomButton_.addEventListener('click',
       this.onNewRoomClick_.bind(this), false);
@@ -477,6 +479,10 @@ AppController.prototype.onSubmitUrl_ = function(e) {
   this.noteList_.appendChild(list_item);
   this.urlInput_.value = "";
   this.deactivate_(this.sendUrlForm_);
+
+  if (!this.screenVideo_.classList.contains('active')) {
+    this.activate_(this.screenVideo_);
+  }
 }
 
 AppController.prototype.calculateTimeStamp = function() {
