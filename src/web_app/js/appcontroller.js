@@ -241,7 +241,7 @@ AppController.prototype.showRoomSelection_ = function() {
 
 AppController.prototype.setupUi_ = function() {
   this.iconEventSetup_();
-  document.onkeypress = this.onKeyPress_.bind(this);
+  //document.onkeypress = this.onKeyPress_.bind(this);
   window.onmousemove = this.showIcons_.bind(this);
 
   $(UI_CONSTANTS.muteAudioSvg).onclick = this.toggleAudioMute_.bind(this);
