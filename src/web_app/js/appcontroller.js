@@ -65,8 +65,6 @@ var AppController = function(loadingParams) {
   trace('Initializing; server= ' + loadingParams.roomServer + '.');
   trace('Initializing; room=' + loadingParams.roomId + '.');
 
-  var _that = this;
-
   this.endShareButton_ = $(UI_CONSTANTS.endShareButton);
   this.endShareDiv_   = $(UI_CONSTANTS.endShareDiv);
   this.hangupSvg_     = $(UI_CONSTANTS.hangupSvg);
