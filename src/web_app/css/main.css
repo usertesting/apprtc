@@ -451,6 +451,15 @@ svg {
   fill: #dd2c00;
 }
 
+#share-screen {
+  float: left;
+  width: 48px;
+  height: 48px;
+  opacity: 0.8;
+  font-size: 16px;
+  border-radius: 50%;
+}
+
 /*////// icons CSS end /////////////////////////*/
 
 /*////// hidden items CSS start ////////////////////////*/
