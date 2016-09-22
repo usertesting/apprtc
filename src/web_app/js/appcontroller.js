@@ -221,6 +221,11 @@ AppController.prototype.showRoomSelection_ = function() {
 
   this.show_(roomSelectionDiv);
   this.roomSelection_.onRoomSelected = function(roomName) {
+    // Override roomName for demo purposes
+    if (this.loadingParams_.demo) {
+      roomName = 123456789;
+    }
+
     this.hide_(roomSelectionDiv);
     this.show_(confirmJoinDiv);
     this.createCall_();
@@ -672,6 +677,7 @@ AppController.prototype.loadUrlParams_ = function() {
   this.loadingParams_.audioSendCodec = urlParams['asc'];
   this.loadingParams_.audioRecvBitrate = urlParams['arbr'];
   this.loadingParams_.audioRecvCodec = urlParams['arc'];
+  this.loadingParams_.demo = urlParams['demo'];
   this.loadingParams_.opusMaxPbr = urlParams['opusmaxpbr'];
   this.loadingParams_.opusFec = urlParams['opusfec'];
   this.loadingParams_.opusDtx = urlParams['opusdtx'];
